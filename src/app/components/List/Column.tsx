@@ -22,19 +22,29 @@ export default function Column({ column, onEdit, onDelete, onToggleCompletion }:
         setTitle(column.title);
     }, [column.title]);
 
+    useEffect(() => {
+        const isEditing = localStorage.getItem(`editing-${column.id}`);
+        if (isEditing === 'true') {
+            setEditing(true);
+        }
+    }, []);
+
     const handleEdit = () => {
         setTitle(column.title.replace(/\s*\d+$/, ''));
         setEditing(true);
+        localStorage.setItem(`editing-${column.id}`, 'true');
     };
 
     const handleSaveEdit = () => {
         onEdit(column.id, title);
         setEditing(false);
+        localStorage.removeItem(`editing-${column.id}`);
     };
 
     const handleCancelEdit = () => {
         setTitle(column.title);
         setEditing(false);
+        localStorage.removeItem(`editing-${column.id}`);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,5 +94,3 @@ export default function Column({ column, onEdit, onDelete, onToggleCompletion }:
         </div>
     );
 }
-
-
