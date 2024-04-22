@@ -27,7 +27,7 @@ export default function Column({ column, onEdit, onDelete, onToggleCompletion }:
         if (isEditing === 'true') {
             setEditing(true);
         }
-    }, []);
+    }, [column.id]);
 
     const handleEdit = () => {
         setTitle(column.title.replace(/\s*\d+$/, ''));
